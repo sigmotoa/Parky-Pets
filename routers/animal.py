@@ -19,6 +19,18 @@ def show_all_animals():
         return animals_list
 
 
+@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=AnimalBase)
+def show_one_animal(id: str):
+    if not animals_list:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No animal found")
+    else:
+        for animal in animals_list:
+            if animal.id == id:
+                return animal
+        return None
+
+
+
 
 
 
