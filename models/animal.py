@@ -6,7 +6,7 @@ from enums.gender import Gender
 
 
 class AnimalBase(BaseModel):
-    id:str
+    id:str #TODO UUID
     name:str
     species:str = "Dog" #TODO Add more animals
     breed:Breed
