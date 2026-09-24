@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from enums.id_type import IdType
 
 
@@ -9,7 +9,7 @@ class UserBase(BaseModel):
     id_type: IdType
     id_number: str
     phone_number: str
-    email: str #TODO change to EmailStr from pydantic
+    email: EmailStr
 
 
 class UserUpdate(BaseModel):
