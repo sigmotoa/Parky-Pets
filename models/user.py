@@ -3,7 +3,7 @@ from enums.id_type import IdType
 
 
 class UserBase(BaseModel):
-    id:str
+    id:str #TODO UUID
     first_name: str
     last_name: str
     id_type: IdType
