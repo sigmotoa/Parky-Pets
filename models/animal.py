@@ -14,3 +14,6 @@ class AnimalBase(BaseModel):
     gender:Gender
     status:AliveStatus = AliveStatus.ALIVE
 
+class AnimalStatusUpdate(BaseModel):
+    alive:AliveStatus
+
