@@ -1,4 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
+
+from data.operations.user import create_user_db, read_all_users_db, read_one_user_db, update_user_db, delete_user_db
 from models.user import UserBase, UserUpdate, UserID
 from data.user import create_user_register, read_all_users_csv, read_one_user_csv
 
@@ -7,7 +9,7 @@ users_list:list[UserBase]=[]
 router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserID)
-def create_user(new_user: UserBase):
+async def create_user(new_user: UserBase):
     '''
     Create a new user in the platform
     :param new_user:
@@ -16,7 +18,9 @@ def create_user(new_user: UserBase):
     #users_list.append(new_user)
     #return {"New User Added": new_user}
 
-    return create_user_register(new_user)
+    #return create_user_register(new_user)
+
+    return create_user_db(new_user)
 
 
 
@@ -27,12 +31,17 @@ def show_all_users():
     :return: List with whole users registered
     '''
 
-    all_users = read_all_users_csv()
+    #all_users = read_all_users_csv()
+    #if not all_users:
+     #   raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
+    #else:
+     #   return all_users
+
+    all_users = read_all_users_db()
     if not all_users:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
     else:
         return all_users
-
 
 
 @router.get("/{user_id}", status_code=status.HTTP_200_OK, response_model=UserID)
@@ -51,9 +60,15 @@ def show_one_user(user_id: int):
       #      if user.id == user_id:
       #          return user
       #  return "User not found"
-    one_user=read_one_user_csv(user_id)
+    #one_user=read_one_user_csv(user_id)
+    #if not one_user:
+    #    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No user found")
+    #else:
+     #   return one_user
+
+    one_user = read_one_user_db(user_id)
     if not one_user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No user found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="User not found")
     else:
         return one_user
 
@@ -67,19 +82,21 @@ def update_user(user_id: str, new_user: UserUpdate):
     :param new_user:
     :return: the new name of the user
     '''
-    if not users_list:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
-    else:
-        for user in users_list:
-            if user.id == user_id:
-                user.first_name = new_user.first_name
-                return user
-        return None
+    ##if not users_list:
+      ##  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
+    #else:
+     #   for user in users_list:
+      #      if user.id == user_id:
+       #         user.first_name = new_user.first_name
+       #         return user
+       # return None
+    user = update_user_db(user_id, new_user)
+    return user
 
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(user_id: str):
-    if users_list:
+    '''    if users_list:
         for user in users_list:
             if user.id == user_id:
                 users_list.remove(user)
@@ -87,3 +104,9 @@ def delete_user(user_id: str):
             return "User not found"
         return "User not found"
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
+'''
+    deleted = delete_user_db(user_id)
+    if not deleted:
+        return "User not found... deleted done"
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="User not found")
+
