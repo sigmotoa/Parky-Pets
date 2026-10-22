@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 
-from data.db.operations_db import create_animal_db, show_all_animals_db, show_one_animal_db
+from data.db.operations_db import create_animal_db, show_all_animals_db, show_one_animal_db, update_animal_db
 from models.animal import AnimalBase, AnimalStatusUpdate, AnimalID
 from data import animal
 
@@ -49,7 +49,7 @@ def show_one_animal(id: str):
 
 @router.patch("/{id}", status_code=status.HTTP_200_OK, response_model=AnimalBase)
 def update_animal_status(id: str, new_status: AnimalStatusUpdate):
-    if not animals_list:
+    '''if not animals_list:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No animal found")
     else:
         for animal in animals_list:
@@ -57,7 +57,8 @@ def update_animal_status(id: str, new_status: AnimalStatusUpdate):
                 animal.status = new_status.alive
                 return animal
         return None
-
+'''
+    return update_animal_db(id, new_status)
 
 
 
