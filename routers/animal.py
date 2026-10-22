@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status, HTTPException
 
-from data.db.operations_db import create_animal_db, show_all_animals_db, show_one_animal_db, update_animal_db
+from data.db.operations_db import create_animal_db, show_all_animals_db, show_one_animal_db, update_animal_db, \
+    delete_animal_db
 from models.animal import AnimalBase, AnimalStatusUpdate, AnimalID
 from data import animal
 
@@ -61,6 +62,10 @@ def update_animal_status(id: str, new_status: AnimalStatusUpdate):
     return update_animal_db(id, new_status)
 
 
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_animal(id: str):
+    delete_animal_db(id)
+    return show_one_animal_db(id)
 
 
 

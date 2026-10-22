@@ -1,3 +1,4 @@
+from enums import alivestatus
 from models.animal import AnimalID, AnimalBase, AnimalStatusUpdate
 from sqlmodel import SQLModel, Session, select
 from .animal import engine
@@ -39,3 +40,11 @@ def update_animal_db(animal_id: int, status:AnimalStatusUpdate):
 
     session.close()
     return animal_db
+
+def delete_animal_db(animal_id: int):
+    session= Session(engine)
+    update_animal_db(animal_id, status=AliveStatus.DEAD)
+    session.commit()
+    session.close()
+
+    return True
