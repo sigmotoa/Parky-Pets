@@ -19,3 +19,10 @@ def show_all_animals_db():
     animals = session.exec(select(AnimalID)).all()
     session.close()
     return animals
+
+
+def show_one_animal_db(animal_id: int):
+    session= Session(engine)
+    animal_db = session.get(AnimalID, animal_id)
+    session.close()
+    return animal_db

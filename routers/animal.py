@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 
-from data.db.operations_db import create_animal_db, show_all_animals_db
+from data.db.operations_db import create_animal_db, show_all_animals_db, show_one_animal_db
 from models.animal import AnimalBase, AnimalStatusUpdate, AnimalID
 from data import animal
 
@@ -41,7 +41,7 @@ def show_one_animal(id: str):
                 return animal
         return None
     '''
-    one_animal = animal.read_one_animal_by_id(id)
+    one_animal = show_one_animal_db(id)
     if not one_animal:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No animal found")
     else:
