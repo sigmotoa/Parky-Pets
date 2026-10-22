@@ -17,7 +17,7 @@ class AnimalBase(SQLModel):
     status:AliveStatus = AliveStatus.ALIVE
 
 class AnimalStatusUpdate(SQLModel):
-    alive:AliveStatus
+    status:AliveStatus
 
 
 class AnimalID(AnimalBase, table=True):
