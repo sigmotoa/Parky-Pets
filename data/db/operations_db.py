@@ -42,9 +42,14 @@ def update_animal_db(animal_id: int, status:AnimalStatusUpdate):
     return animal_db
 
 def delete_animal_db(animal_id: int):
-    session= Session(engine)
-    update_animal_db(animal_id, status=AliveStatus.DEAD)
-    session.commit()
-    session.close()
+    #session= Session(engine)
+    #session.commit()
+    #session.close()
+    #animal_status: AnimalStatusUpdate
+    #animal_status = alivestatus.AliveStatus.DEAD
+    #status: alivestatus.AliveStatus = alivestatus.AliveStatus.DEAD
+    status = AnimalStatusUpdate
+    status.status = alivestatus.AliveStatus.DEAD
+    animal = update_animal_db(animal_id, status)
+    #return True
 
-    return True
