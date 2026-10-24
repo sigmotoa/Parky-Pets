@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from starlette import status
 
 from data.db.product_operation_db import create_one_product_db, read_all_products_db, read_one_product_db, \
-    update_one_product_db
+    update_one_product_db, delete_one_product_db
 from models.product import ProductBase, ProductID
 from data.product import create_product_csv, read_all_products_csv, read_one_product_csv
 
@@ -39,6 +39,9 @@ def update_product(product_id: int, new_price:float):
 
 
 
-#TODO
-def delete_product():
-    pass
+@router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_product(product_id:int):
+    if delete_one_product_db(product_id):
+        return {"Product":"Deleted"}
+    else:
+        raise HTTPException(status_code=404, detail="Product not found")

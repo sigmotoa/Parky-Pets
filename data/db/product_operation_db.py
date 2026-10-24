@@ -36,5 +36,14 @@ def update_one_product_db(product_id:int,new_price:float):
     session.close()
     return product
 
+def delete_one_product_db(id:int):
+    session = Session(engine)
+    product = session.get(ProductID,id)
+    session.delete(product)
+    session.commit()
+    session.close()
+    return True
+
+
 
 
