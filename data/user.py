@@ -1,7 +1,7 @@
 import csv
 from models.user import UserBase, UserID
 
-database = "users.csv"
+database = "probe.csv"
 
 column_fields = ["id", "first_name", "last_name", "id_type", "id_number", "phone_number", "email"]
 

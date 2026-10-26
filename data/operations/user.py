@@ -1,13 +1,17 @@
 from select import select
+from fastapi import UploadFile
 
+from data.image_storage import save_image
 from data.user_db import engine
 from models.user import UserBase, UserID, UserUpdate
 from sqlmodel import SQLModel, Session, select
 
 
-def create_user_db(new_user: UserBase):
+def create_user_db(new_user: UserBase, image:UploadFile):
+    img_url=save_image(image, "users")
     session = Session(engine)
     user = UserID.model_validate(new_user)
+    user.image_url = img_url
     session.add(user)
     session.commit()
     session.refresh(user)

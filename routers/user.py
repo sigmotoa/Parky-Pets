@@ -11,7 +11,7 @@ users_list:list[UserBase]=[]
 router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserID)
-async def create_user(new_user: UserBase):
+async def create_user(image: UploadFile, new_user: UserBase):
     '''
     Create a new user in the platform
     :param new_user:
@@ -22,26 +22,29 @@ async def create_user(new_user: UserBase):
 
     #return create_user_register(new_user)
 
-    return create_user_db(new_user)
+    #new_user_id = UserID(id=new_id, **new_user.model_dump())
+    ##image_path = save_image(image, "users")
+    ##user = UserCreate(image_url=image_path, **new_user.model_dump())
+    return create_user_db(new_user, image)
 
 
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=list[UserID])
 def show_all_users():
     '''
-    Show all users in the platform
-    :return: List with whole users registered
+    Show all probe in the platform
+    :return: List with whole probe registered
     '''
 
     #all_users = read_all_users_csv()
     #if not all_users:
-     #   raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
+     #   raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     #else:
      #   return all_users
 
     all_users = read_all_users_db()
     if not all_users:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     else:
         return all_users
 
@@ -54,9 +57,9 @@ def show_one_user(user_id: int):
     :return: A user with the same ID registered
     '''
     ##if not users_list:
-      #  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
+      #  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     #elif len(users_list)<user_id:
-     #   raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No users found for list size")
+     #   raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No probe found for list size")
     #else:
      #   for user in users_list:
       #      if user.id == user_id:
@@ -85,7 +88,7 @@ def update_user(user_id: str, new_user: UserUpdate):
     :return: the new name of the user
     '''
     ##if not users_list:
-      ##  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
+      ##  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No user found")
     #else:
      #   for user in users_list:
       #      if user.id == user_id:
@@ -105,7 +108,7 @@ def delete_user(user_id: str):
                 return user
             return "User not found"
         return "User not found"
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
 '''
     deleted = delete_user_db(user_id)
     if not deleted:
@@ -116,7 +119,7 @@ def delete_user(user_id: str):
 #Temporal
 @router.post("/image", status_code=status.HTTP_201_CREATED)
 def store_image(image:UploadFile):
-    image_path = save_image(image, "users")
+    image_path = save_image(image, "probe")
     return image_path
 
 
