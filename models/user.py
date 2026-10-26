@@ -21,6 +21,7 @@ class UserUpdate(UserBase):
     id_number: str| None = None
     phone_number: str| None = None
     email: str| None = None
+    image_url:str| None = None
 
 class UserID(UserBase, table =True):
     id: Optional[int] = Field(default=None, primary_key=True)
