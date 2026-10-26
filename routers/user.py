@@ -1,5 +1,7 @@
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, UploadFile, File
+from pydantic import Field
 
+from data.image_storage import save_image
 from data.operations.user import create_user_db, read_all_users_db, read_one_user_db, update_user_db, delete_user_db
 from models.user import UserBase, UserUpdate, UserID
 from data.user import create_user_register, read_all_users_csv, read_one_user_csv
@@ -109,4 +111,17 @@ def delete_user(user_id: str):
     if not deleted:
         return "User not found... deleted done"
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="User not found")
+
+
+#Temporal
+@router.post("/image", status_code=status.HTTP_201_CREATED)
+def store_image(image:UploadFile):
+    image_path = save_image(image, "users")
+    return image_path
+
+
+
+
+
+
 
