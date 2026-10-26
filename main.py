@@ -1,9 +1,12 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from data.db.db_connection import create_db_tables
 from routers import user,product
+from data.image_storage import IMAGES_URL, IMAGES_DIR
 
 app = FastAPI()
+app.mount(IMAGES_URL, StaticFiles(directory=IMAGES_DIR), name="products")
 
 @app.on_event("startup")
 def on_startup():
