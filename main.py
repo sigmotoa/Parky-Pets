@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from data.db.animal import create_db_tables
+
 from routers import animal
 
 from data.db.db_connection import create_db_tables
