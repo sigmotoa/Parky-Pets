@@ -2,9 +2,9 @@ from select import select
 from fastapi import UploadFile
 
 from data.image_storage import save_image
-from data.user_db import engine
+from data.db.user_db import engine
 from models.user import UserBase, UserID, UserUpdate
-from sqlmodel import SQLModel, Session, select
+from sqlmodel import Session, select
 
 
 def create_user_db(new_user: UserBase, image:UploadFile):

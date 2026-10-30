@@ -1,5 +1,5 @@
 from sqlmodel import SQLModel, Session, select
-from .db_connection import engine
+from data.db.db_connection import engine
 from models.product import ProductBase, ProductID
 
 

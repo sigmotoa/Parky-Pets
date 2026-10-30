@@ -1,7 +1,7 @@
 from enums import alivestatus
 from models.animal import AnimalID, AnimalBase, AnimalStatusUpdate
 from sqlmodel import SQLModel, Session, select
-from .animal import engine
+from data.db.animal import engine
 
 
 def create_animal_db(new_animal:AnimalBase):
