@@ -29,11 +29,3 @@ def save_image(file:UploadFile, folder:str):
     return f"{IMAGES_URL}/{folder}/{file_name}"
 
 
-
-
-
-
-
-
-
-
