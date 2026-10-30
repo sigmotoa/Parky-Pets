@@ -1,6 +1,9 @@
 ## Parky Pets
 The app to control the vaccines of your loved animal friends 🐶
 
+branch g_2 -> Animals
+branch g_3 
+branch g_4 
 
 ### Class Diagram
 

@@ -1,16 +1,19 @@
 import uuid
 from pathlib import Path
 import os
-from fastapi import HTTPException, UploadFile
+from fastapi import UploadFile, HTTPException
 
 IMAGES_DIR = Path("images")
 IMAGES_URL = "/images"
 ALLOWED_TYPES = {
     "image/jpeg":"jpeg",
+    "image/jpg":"jpg",
     "image/png":"png",
     "image/bmp":"bmp",
-    "image/webp":"webp"
+    "image/webp":"webp",
+    "image/heic":"heic"
 }
+
 IMAGES_DIR.mkdir(exist_ok=True)
 
 def save_image(file:UploadFile, folder:str):
