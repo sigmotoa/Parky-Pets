@@ -1,11 +1,10 @@
 from fastapi import APIRouter, HTTPException, UploadFile
 from starlette import status
 
-from data.db.product_operation_db import create_one_product_db, read_all_products_db, read_one_product_db, \
+from data.db.operations.product_operation_db import create_one_product_db, read_all_products_db, read_one_product_db, \
     update_one_product_db, delete_one_product_db
 from data.image_storage import save_image
 from models.product import ProductBase, ProductID
-from data.product import create_product_csv, read_all_products_csv, read_one_product_csv
 
 router = APIRouter()
 

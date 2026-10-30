@@ -1,10 +1,8 @@
-from fastapi import APIRouter, status, HTTPException, UploadFile, File
-from pydantic import Field
+from fastapi import APIRouter, status, HTTPException, UploadFile
 
 from data.image_storage import save_image
-from data.operations.user import create_user_db, read_all_users_db, read_one_user_db, update_user_db, delete_user_db
+from data.db.operations.user_operation_db import create_user_db, read_all_users_db, read_one_user_db, update_user_db, delete_user_db
 from models.user import UserBase, UserUpdate, UserID
-from data.user import create_user_register, read_all_users_csv, read_one_user_csv
 
 users_list:list[UserBase]=[]
 

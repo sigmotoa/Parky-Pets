@@ -1,11 +1,9 @@
 from fastapi import APIRouter, status, HTTPException, UploadFile
 
-from data.db.operations_db import create_animal_db, show_all_animals_db, show_one_animal_db, update_animal_db, \
+from data.db.operations.animal_operations_db import create_animal_db, show_all_animals_db, show_one_animal_db, update_animal_db, \
     delete_animal_db
 from data.image_storage import save_image
-from enums.alivestatus import AliveStatus
 from models.animal import AnimalBase, AnimalStatusUpdate, AnimalID
-from data import animal
 
 animals_list:list[AnimalBase] = []
 
