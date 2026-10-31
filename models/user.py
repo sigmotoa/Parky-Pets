@@ -12,6 +12,7 @@ class UserBase(SQLModel):
     id_number: str
     phone_number: str
     email: EmailStr
+    image_url: Optional[str] = None
 
 
 class UserUpdate(UserBase):
@@ -25,4 +26,3 @@ class UserUpdate(UserBase):
 
 class UserID(UserBase, table =True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    image_url:str| None = None

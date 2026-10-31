@@ -1,7 +1,9 @@
-from fastapi import APIRouter, status, HTTPException, UploadFile
+from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File
+from pydantic import EmailStr
 
 from data.image_storage import save_image
 from data.db.operations.user_operation_db import create_user_db, read_all_users_db, read_one_user_db, update_user_db, delete_user_db
+from enums.id_type import IdType
 from models.user import UserBase, UserUpdate, UserID
 
 users_list:list[UserBase]=[]
@@ -9,21 +11,33 @@ users_list:list[UserBase]=[]
 router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserID)
-async def create_user(image: UploadFile, new_user: UserBase):
+async def create_user(
+        first_name:str = Form(...),
+        last_name: str = Form(...),
+        id_type: IdType = Form(...),
+        id_number: str = Form(...),
+        phone_number: str = Form(...),
+        email: EmailStr = Form(...),
+        image: UploadFile = File()):
     '''
     Create a new user in the platform
     :param new_user:
     :return: OK, Created with status 201
     '''
-    #users_list.append(new_user)
-    #return {"New User Added": new_user}
-
-    #return create_user_register(new_user)
-
-    #new_user_id = UserID(id=new_id, **new_user.model_dump())
-    ##image_path = save_image(image, "users")
-    ##user = UserCreate(image_url=image_path, **new_user.model_dump())
-    return create_user_db(new_user, image)
+    img_url = save_image(image, "users")
+    new_user = UserBase(
+        first_name=first_name,
+        last_name=last_name,
+        id_type=id_type,
+        id_number=id_number,
+        phone_number=phone_number,
+        email=email,
+        image_url=img_url
+    )
+    try:
+        return create_user_db(new_user)
+    except Exception as e:
+        raise e
 
 
 
@@ -117,7 +131,7 @@ def delete_user(user_id: str):
 #Temporal
 @router.post("/image", status_code=status.HTTP_201_CREATED)
 def store_image(image:UploadFile):
-    image_path = save_image(image, "probe")
+    image_path = save_image(image, "users")
     return image_path
 
 
