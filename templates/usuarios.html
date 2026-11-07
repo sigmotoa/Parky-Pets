@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% block content %}
+<h1>Usuarios de {{ app_name }}</h1>
+<p>Registrados ({{ usuarios|length }})</p>
+{% for usuario in usuarios %}
+<hr>
+<h4>ID en DB</h4> <p> {{ usuario.id }} </p>
+<h4>Nombre</h4> <p> {{ usuario.first_name }} </p>
+<h4>Apellido</h4> <p> {{ usuario.last_name }} </p>
+<img src="{{ usuario.image_url }}" alt="Foto de {{ usuario.first_name }}" width="80" height="80">
+<hr>
+{% endfor %}
+{% endblock %}
+</body>
+</html>
