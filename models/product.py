@@ -10,6 +10,7 @@ class ProductBase(SQLModel):
     price:float
     category:ProductCategory
     expiration_date:str
+    image_url: Optional[str] = None
 
 
 class ProductID(ProductBase, table=True):

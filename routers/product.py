@@ -1,20 +1,37 @@
-from fastapi import APIRouter, HTTPException, UploadFile
+from fastapi import APIRouter, HTTPException, UploadFile, Form, File
 from starlette import status
 
 from data.db.operations.product_operation_db import create_one_product_db, read_all_products_db, read_one_product_db, \
     update_one_product_db, delete_one_product_db
 from data.image_storage import save_image
+from enums.product_category import ProductCategory
 from models.product import ProductBase, ProductID
 
 router = APIRouter()
 
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
-def create_product(new_product:ProductBase):
-    if create_one_product_db(new_product):
-        return {"Product":"Added"}
-    return None
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=ProductID)
+def create_product(
+        name:str = Form(...),
+        price:float = Form(...),
+        category:ProductCategory = Form(...),
+        expiration_date:str = Form(...),
+        image: UploadFile = File()
+):
+    img_url = save_image(image,"products")
+    new_product = ProductBase(
+        name=name,
+        price=price,
+        category=category,
+        expiration_date=expiration_date,
+        image_url=img_url
+    )
+    try:
+       return create_one_product_db(new_product)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 
 
 
