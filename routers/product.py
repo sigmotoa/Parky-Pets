@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, UploadFile, Form, File
+from fastapi import APIRouter, HTTPException, UploadFile, Form, File, Request
 from starlette import status
 
 from data.db.operations.product_operation_db import create_one_product_db, read_all_products_db, read_one_product_db, \
@@ -6,6 +6,7 @@ from data.db.operations.product_operation_db import create_one_product_db, read_
 from data.image_storage import save_image
 from enums.product_category import ProductCategory
 from models.product import ProductBase, ProductID
+from templating import templates
 
 router = APIRouter()
 
@@ -36,8 +37,11 @@ def create_product(
 
 
 @router.get("/", response_model=list[ProductID])
-def show_all_products():
-    return read_all_products_db()
+def show_all_products(request:Request):
+    all_products =  read_all_products_db()
+    return templates.TemplateResponse(
+        request, "products.html", {"title":"Productos","products":all_products}
+    )
 
 
 #TODO
