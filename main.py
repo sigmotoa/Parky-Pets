@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from routers import animal
+from routers import animal, web
 
 from data.db.db_connection import create_db_tables
 from routers import product
@@ -21,6 +21,7 @@ app.mount("/static", StaticFiles(directory=BASE_DIR), name="static")
 #def on_startup():
 #    create_db_tables()
 
+app.include_router(router=web.router, tags=["HTML"])
 app.include_router(router=user.router, prefix="/users", tags=["users"])
 app.include_router(router=animal.router, prefix="/animals", tags=["animals"])
 app.include_router(router=product.router, prefix="/products", tags=["products"])
