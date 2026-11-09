@@ -6,4 +6,4 @@ router = APIRouter()
 
 @router.get("/")
 def index(request: Request):
-    pass
+    return templates.TemplateResponse(request, "index.html")
