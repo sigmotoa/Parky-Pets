@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Nuevo producto para adicionar</h1>
+
+<form method="post" action="/products/" enctype="multipart/form-data">
+
+  <label>Nombre del producto
+  <input name="name" required>
+  </label>
+  <label>
+    Precio
+    <input name="price" required type="number">
+  </label>
+  <label> Tipo de producto
+    <select name="category" required>
+      <option value=""></option>
+      <option value="Juguete">Juguete</option>
+      <option value="Vacuna">Vacuna</option>
+      <option value="Desparacitante">Desparacitante</option>
+    </select>
+  </label>
+  <label>Fecha de vencimiento
+  <input name="expiration_date" type="date" required>
+  </label>
+  <label>
+    Imagen del producto
+    <input name="image" type="file" required>
+  </label>
+  <input name="pass" type="password">
+  <input type="submit">
+</form>
+
+{% endblock %}

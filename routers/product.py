@@ -1,15 +1,20 @@
 from fastapi import APIRouter, HTTPException, UploadFile, Form, File, Request
 from starlette import status
+from starlette.responses import RedirectResponse
 
 from data.db.operations.product_operation_db import create_one_product_db, read_all_products_db, read_one_product_db, \
     update_one_product_db, delete_one_product_db
 from data.image_storage import save_image
+from enums import product_category
 from enums.product_category import ProductCategory
 from models.product import ProductBase, ProductID
 from templating import templates
 
 router = APIRouter()
 
+@router.get("/new")
+def new_product(request:Request):
+    return templates.TemplateResponse(request, "new_product.html", {"title":"Nuevo Producto", "product_category":product_category})
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=ProductID)
@@ -29,10 +34,10 @@ def create_product(
         image_url=img_url
     )
     try:
-       return create_one_product_db(new_product)
+        create_one_product_db(new_product)
+        return RedirectResponse("/products/", status_code=303)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-
 
 
 
