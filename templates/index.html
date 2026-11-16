@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }} | {{ app_name }}</title>
-</head>
-<body>
-<h1>Hola mundo en Jinja2 + FastAPI</h1>
+{% extends "base.html" %}
+{% block content %}
+<h1>Parky Pets</h1>
 
-</body>
-</html>
+<p>Control y carnet de vacunas. </p>
+
+{% endblock %}

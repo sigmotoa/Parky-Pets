@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }} | {{ app_name }}</title>
+</head>
+<body>
+{% include "partials/nav.html" %}
+<main>
+  {% block content %}
+  {% endblock %}
+
+</main>
+</body>
+</html>
