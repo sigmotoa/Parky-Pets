@@ -1,20 +1,20 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
-from routers import animal
+from routers import animal, product, user
+from templating import BASE_DIR
 
 from data.db.db_connection import create_db_tables
-from routers import product
-from fastapi.staticfiles import StaticFiles
 from data.image_storage import IMAGES_URL,IMAGES_DIR
 
-from routers import user
+
 async def lifespan(app:FastAPI):
     create_db_tables()
     yield
 
 app = FastAPI(lifespan=lifespan, title="Parky PETS")
 app.mount(IMAGES_URL, StaticFiles(directory=IMAGES_DIR), name="images")
-
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 ##@app.on_event("startup")
 #def on_startup():
