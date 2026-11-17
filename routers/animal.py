@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File, Request
-from starlette.responses import RedirectResponse, HTMLResponse
+from starlette.responses import RedirectResponse
 
 from data.db.operations.animal_operations_db import create_animal_db, show_all_animals_db, show_one_animal_db, update_animal_db, \
     delete_animal_db
@@ -19,8 +19,9 @@ def new_animal_form(request: Request):
     return templates.TemplateResponse(request, "new_animal.html", {"title": "New Animal", "breeds": [e.value for e in Breed], "genders": [e.value for e in Gender], "status": [e.value for e in AliveStatus]})
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_class=HTMLResponse)
-def create_animal(name: str = Form(...),
+@router.post("/", status_code=status.HTTP_201_CREATED, response_class=RedirectResponse)
+def create_animal(request:Request,
+                  name: str = Form(...),
                   species: str = Form(...),
                   breed: Breed = Form(...),
                   birth_day: str = Form(...),
@@ -44,7 +45,8 @@ def create_animal(name: str = Form(...),
     #else:
      #   raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Animal not found")
     try:
-        return RedirectResponse("/")
+        create_animal_db(new_animal)
+        return RedirectResponse("/animales")
     except Exception as e:
         raise e
 
