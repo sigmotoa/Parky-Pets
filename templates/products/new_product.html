@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Nuevo producto para adicionar</h1>
+
+<form method="post" action="/products/" enctype="multipart/form-data">
+
+  <div class="field">
+  <label class="label">Name</label>
+  <div class="control has-icons-left">
+    <input name="name" class="input" type="text" placeholder="Nombre del producto" required>
+  <span class="icon is-small is-left">
+      <i class="fas fa-id-card"></i>
+    </span>
+  </div>
+</div>
+
+
+
+<div class="field">
+  <label class="label">Precio</label>
+  <div class="control has-icons-left has-icons-right">
+    <input name="price" min="1000" max="5000000" maxlength="7" class="input is-success" type="number" placeholder="100000" required>
+    <span class="icon is-small is-left">
+      <i class="fas fa-dollar"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Category</label>
+  <div class="control">
+    <div class="select">
+      <select name="category">
+        <option>Select category</option>
+        {% for product in ProductCategory %}
+        <option value="{{ product.value }}">{{ product.value }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="field">
+  <label class="label">Expiration Date</label>
+  <div class="control has-icons-left has-icons-right">
+    <input name="expiration_date" class="input is-danger" type="date" placeholder="Date">
+    <span class="icon is-small is-left">
+      <i class="fas fa-calendar"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+  </div>
+  <p class="help is-danger">This email is invalid</p>
+</div>
+
+<div class="file is-boxed">
+  <label class="file-label">
+    <input name="image" class="file-input" type="file" name="resume" />
+    <span class="file-cta">
+      <span class="file-icon">
+        <i class="fas fa-upload"></i>
+      </span>
+      <span class="file-label"> Choose a file… </span>
+    </span>
+  </label>
+</div>
+
+
+
+
+
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link">Submit</button>
+  </div>
+  <div class="control">
+    <button class="button is-link is-light">Cancel</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+</form>
+
+{% endblock %}

@@ -14,7 +14,7 @@ router = APIRouter()
 
 @router.get("/new")
 def new_product(request:Request):
-    return templates.TemplateResponse(request, "new_product.html", {"title":"Nuevo Producto", "product_category":product_category})
+    return templates.TemplateResponse(request, "products/new_product.html", {"title":"Nuevo Producto", "product_category":product_category})
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=ProductID)
@@ -45,7 +45,7 @@ def create_product(
 def show_all_products(request:Request):
     all_products =  read_all_products_db()
     return templates.TemplateResponse(
-        request, "products.html", {"title":"Productos","products":all_products}
+        request, "products/products.html", {"title":"Productos","products":all_products}
     )
 
 
