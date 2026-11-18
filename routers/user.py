@@ -1,14 +1,17 @@
-from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File
+from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File, Request
 from pydantic import EmailStr
 
 from data.image_storage import save_image
 from data.db.operations.user_operation_db import create_user_db, read_all_users_db, read_one_user_db, update_user_db, delete_user_db
 from enums.id_type import IdType
 from models.user import UserBase, UserUpdate, UserID
+from templating import templates
 
 users_list:list[UserBase]=[]
 
 router = APIRouter()
+
+
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserID)
 async def create_user(
@@ -42,7 +45,7 @@ async def create_user(
 
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=list[UserID])
-def show_all_users():
+def show_all_users(request: Request):
     '''
     Show all probe in the platform
     :return: List with whole probe registered
@@ -58,7 +61,7 @@ def show_all_users():
     if not all_users:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     else:
-        return all_users
+        return templates.TemplateResponse(request, "/user/users.html",{"title":"Usuarios", "users":all_users})
 
 
 @router.get("/{user_id}", status_code=status.HTTP_200_OK, response_model=UserID)

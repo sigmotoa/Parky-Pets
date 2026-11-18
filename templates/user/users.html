@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="title">Usuarios de {{ app_name }}</h1>
+
+<p>Tenemos {{users|length}} usuarios registrados</p>
+<hr>
+{% for user in users %}
+
+<h3 class="author-decor">{{ user.first_name }}</h3>
+<figure class="image is-128x128">
+  <img class="is-rounded" src="{{ user.image_url }}" width="128" height="128"/>
+</figure>
+<hr>
+{% endfor %}
+{% endblock %}
