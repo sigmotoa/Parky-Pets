@@ -5,6 +5,12 @@
 <h1 class="title">Usuarios de {{ app_name }}</h1>
 
 <p>Tenemos {{users|length}} usuarios registrados</p>
+<a class="button is-primary" href="/users/new">
+<span class="icon">
+<i class="fas fa-user"></i>
+</span>
+<span>Add a user</span>
+</a>
 <hr>
 {% for user in users %}
 

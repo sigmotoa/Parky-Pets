@@ -1,5 +1,8 @@
+from urllib import request
+
 from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File, Request
 from pydantic import EmailStr
+from starlette.responses import RedirectResponse, HTMLResponse
 
 from data.image_storage import save_image
 from data.db.operations.user_operation_db import create_user_db, read_all_users_db, read_one_user_db, update_user_db, delete_user_db
@@ -11,9 +14,13 @@ users_list:list[UserBase]=[]
 
 router = APIRouter()
 
+@router.get("/new")
+def form_new_user(request: Request):
+    return templates.TemplateResponse(request, "/user/new.html", {"title":"New User"})
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserID)
+
+@router.post("/", status_code=status.HTTP_201_CREATED, response_class=HTMLResponse)
 async def create_user(
         first_name:str = Form(...),
         last_name: str = Form(...),
@@ -38,7 +45,8 @@ async def create_user(
         image_url=img_url
     )
     try:
-        return create_user_db(new_user)
+        if create_user_db(new_user):
+            return RedirectResponse("/users", status_code=status.HTTP_302_FOUND)
     except Exception as e:
         raise e
 
