@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File, Request
-from starlette.responses import RedirectResponse
+from starlette.responses import RedirectResponse, HTMLResponse
 
 from data.db.operations.animal_operations_db import create_animal_db, show_all_animals_db, show_one_animal_db, update_animal_db, \
     delete_animal_db
@@ -19,7 +19,7 @@ def new_animal_form(request: Request):
     return templates.TemplateResponse(request, "animals/new_animal.html", {"title": "New Animal", "breeds": [e.value for e in Breed], "genders": [e.value for e in Gender], "status": [e.value for e in AliveStatus]})
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_class=RedirectResponse)
+@router.post("/", status_code=status.HTTP_201_CREATED, response_class=HTMLResponse)
 def create_animal(request:Request,
                   name: str = Form(...),
                   species: str = Form(...),
@@ -46,13 +46,13 @@ def create_animal(request:Request,
      #   raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Animal not found")
     try:
         create_animal_db(new_animal)
-        return RedirectResponse("/animales")
+        return RedirectResponse("/animals/", 303)
     except Exception as e:
         raise e
 
 
-@router.get("/", status_code=status.HTTP_200_OK, response_model=list[AnimalID])
-def show_all_animals():
+@router.get("/", status_code=status.HTTP_200_OK)
+def show_all_animals(request: Request):
     '''
     if not animals_list:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No animals found")
@@ -61,7 +61,8 @@ def show_all_animals():
         '''
     ##animals = animal.read_all_animals()
     ##return animals
-    return show_all_animals_db()
+    all_animals = show_all_animals_db()
+    return templates.TemplateResponse(request, "animals/list.html", {"title": "Animals", "animals": all_animals})
 
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=AnimalBase)
 def show_one_animal(id: str):

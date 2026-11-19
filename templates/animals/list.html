@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% from "animals/animal.html" import animal_card %}
+
+{% block content %}
+<h1>Animals ({{ animals|length }})</h1>
+{% for animal in animals %}
+{{ animal_card(animal, loop.index) }}
+{% endfor %}
+{% endblock %}
