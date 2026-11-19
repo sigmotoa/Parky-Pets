@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/new_animal")
 def new_animal_form(request: Request):
-    return templates.TemplateResponse(request, "new_animal.html", {"title": "New Animal", "breeds": [e.value for e in Breed], "genders": [e.value for e in Gender], "status": [e.value for e in AliveStatus]})
+    return templates.TemplateResponse(request, "animals/new_animal.html", {"title": "New Animal", "breeds": [e.value for e in Breed], "genders": [e.value for e in Gender], "status": [e.value for e in AliveStatus]})
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_class=RedirectResponse)
