@@ -15,6 +15,7 @@ class AnimalBase(SQLModel):
     birth_day:str #TODO update to a good data type
     gender:Gender
     status:AliveStatus = AliveStatus.ALIVE
+    image_url: Optional[str] = None
 
 class AnimalStatusUpdate(SQLModel):
     status:AliveStatus

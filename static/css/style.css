@@ -1,0 +1,4 @@
+body {font-family: system-ui, "Ubuntu Mono"; margin: 0;}
+nav {padding: 1rem; background: magenta;}
+nav a {color: cyan; margin-right: 1rem;}
+main {padding: 1rem;}

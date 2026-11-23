@@ -1,26 +1,58 @@
-from fastapi import APIRouter, status, HTTPException, UploadFile
+from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File, Request
+from starlette.responses import RedirectResponse, HTMLResponse
 
 from data.db.operations.animal_operations_db import create_animal_db, show_all_animals_db, show_one_animal_db, update_animal_db, \
     delete_animal_db
 from data.image_storage import save_image
+from enums.alivestatus import AliveStatus
+from enums.breed import Breed
+from enums.gender import Gender
 from models.animal import AnimalBase, AnimalStatusUpdate, AnimalID
+from templating import templates
 
 animals_list:list[AnimalBase] = []
 
 router = APIRouter()
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=AnimalID)
-def create_animal(new_animal:AnimalBase):
+@router.get("/new_animal")
+def new_animal_form(request: Request):
+    return templates.TemplateResponse(request, "animals/new_animal.html", {"title": "New Animal", "breeds": [e.value for e in Breed], "genders": [e.value for e in Gender], "status": [e.value for e in AliveStatus]})
+
+
+@router.post("/", status_code=status.HTTP_201_CREATED, response_class=HTMLResponse)
+def create_animal(request:Request,
+                  name: str = Form(...),
+                  species: str = Form(...),
+                  breed: Breed = Form(...),
+                  birth_day: str = Form(...),
+                  gender: Gender = Form(...),
+                  status: AliveStatus = Form(...),
+                  image:UploadFile = File(...)):
+
+    image_url = save_image(image, "animals")
+    new_animal = AnimalBase(name=name,
+                            species=species,
+                            breed=breed,
+                            birth_day=birth_day,
+                            gender=gender,
+                            status=status,
+                            image_url=image_url)
+
     #status = animal.create_animal(new_animal)
     ##animals_list.append(new_animal)
     #if status:
      #   return status
     #else:
      #   raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Animal not found")
-    return create_animal_db(new_animal)
+    try:
+        create_animal_db(new_animal)
+        return RedirectResponse("/animals/", 303)
+    except Exception as e:
+        raise e
 
-@router.get("/", status_code=status.HTTP_200_OK, response_model=list[AnimalID])
-def show_all_animals():
+
+@router.get("/", status_code=status.HTTP_200_OK)
+def show_all_animals(request: Request):
     '''
     if not animals_list:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No animals found")
@@ -29,7 +61,8 @@ def show_all_animals():
         '''
     ##animals = animal.read_all_animals()
     ##return animals
-    return show_all_animals_db()
+    all_animals = show_all_animals_db()
+    return templates.TemplateResponse(request, "animals/list.html", {"title": "Animals", "animals": all_animals})
 
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=AnimalBase)
 def show_one_animal(id: str):

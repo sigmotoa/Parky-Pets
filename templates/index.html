@@ -1,41 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }} . {{ app_name }}</title>
-</head>
-<body>
-<header>
-    <main>
-        <h1>
-            Esta es una pagina de prueba
-        </h1>
+{% extends "base.html" %}
+{% block content %}
+<h1>Parky Pets</h1>
 
-    </main>
-    <div>
-        <section>
-            <h2>Hola en esta sección pondremos los nombres de los que estan viendo el LIVE</h2>
-            <ul>
-                <li>sigmotoa</li>
-                <li>Andres</li>
-                <li>Josue</li>
-                <li>Laura</li>
-                <li>Oscar</li>
-                <li>Santiago</li>
-                <li>Dubban</li>
-                <li>Ana</li>
-                <li>Paula</li>
-                <li>Joel</li>
-                <li></li>
+<p>Control y carnet de vacunas. </p>
 
 
-            </ul>
-<a href="http://127.0.0.1:8000/usuarios">Mostrar usuarios</a>
-        </section>
+<p>lorem ipsum</p>
 
-    </div>
+<img src="/Users/sigmotoa/Documents/Catolica/2026/s2/parkyProject/images/animals/animals_76179f8f706643cab47399409a4f6c6e.jpeg" sizes="90">
 
-</header>
 
-</body>
-</html>
+
+<a href="/animals/new_animal" class="button is-primary">
+<span class="icon">
+<i class="fas fa-dog"></i>
+</span>
+<span>Add a dog</span>
+</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> Animales Registrados </h1>
+<p> Los animales que tenemos en la DB son: {{ animales|length }} </p>
+<hr>
+{% for perrini in animales %}
+<hr>
+<h4>{{ perrini.id }}</h4>
+<h3>Nombre:</h3>
+<h4>{{ perrini.name }}</h4>
+<h3>Nacimiento</h3>
+<h4>{{ perrini.birth_day }}</h4>
+<img src="{{ perrini.image_url }}" width="100" height="100">
+{% endfor %}
+
+{% endblock %}
