@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post" action="/users/" enctype="multipart/form-data">
+
+<div class="field">
+  <label class="label">First Name</label>
+  <div class="control">
+    <input class="input" name="first_name" type="text" placeholder="First name">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Last Name</label>
+  <div class="control has-icons-left has-icons-right">
+    <input class="input is-success" name="last_name" type="text" placeholder="Last Name" >
+    <span class="icon is-small is-left">
+      <i class="fas fa-user"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-dog"></i>
+    </span>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">ID TYPE</label>
+  <div class="control">
+    <div class="select">
+      <select name="id_type">
+        <option>Select dropdown</option>
+        {% for idt in idType %}
+        <option value="{{ idt.value }}">{{ idt.value }}</option>
+        {% endfor %}
+
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">ID Number</label>
+  <div class="control has-icons-left has-icons-right">
+    <input name="id_number" class="input is-danger" type="text" placeholder="ID Number" >
+    <span class="icon is-small is-left">
+      <i class="fas fa-dni"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+  </div>
+</div>
+
+  <div class="field">
+  <label class="label">Phone Number</label>
+  <div class="control has-icons-left has-icons-right">
+    <input name="phone_number" class="input is-danger" type="tel" placeholder="Phone Number" >
+    <span class="icon is-small is-left">
+      <i class="fas fa-phone"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+  </div>
+</div>
+
+  <div class="field">
+  <label class="label">Email</label>
+  <div class="control has-icons-left has-icons-right">
+    <input name="email" class="input is-danger" type="email" placeholder="Email input" >
+    <span class="icon is-small is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+    <span class="icon is-small is-right">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+  </div>
+  <p class="help is-danger">This email is invalid</p>
+</div>
+
+<div class="file has-name is-boxed">
+  <label class="file-label">
+    <input name="image" class="file-input" type="file" name="User Image" />
+    <span class="file-cta">
+      <span class="file-icon">
+        <i class="fas fa-upload"></i>
+      </span>
+      <span class="file-label"> Choose a file… </span>
+    </span>
+    <span class="file-name"> Screen Shot 2017-07-29 at 15.54.25.png </span>
+  </label>
+</div>
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link">Submit</button>
+  </div>
+  <div class="control">
+    <button class="button is-link is-light">Cancel</button>
+  </div>
+</div>
+
+
+</form>
+
+{% endblock %}

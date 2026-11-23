@@ -1,16 +1,26 @@
-from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File
+from urllib import request
+
+from fastapi import APIRouter, status, HTTPException, UploadFile, Form, File, Request
 from pydantic import EmailStr
+from starlette.responses import RedirectResponse, HTMLResponse
 
 from data.image_storage import save_image
 from data.db.operations.user_operation_db import create_user_db, read_all_users_db, read_one_user_db, update_user_db, delete_user_db
 from enums.id_type import IdType
 from models.user import UserBase, UserUpdate, UserID
+from templating import templates
 
 users_list:list[UserBase]=[]
 
 router = APIRouter()
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserID)
+@router.get("/new")
+def form_new_user(request: Request):
+    return templates.TemplateResponse(request, "/user/new.html", {"title":"New User"})
+
+
+
+@router.post("/", status_code=status.HTTP_201_CREATED, response_class=HTMLResponse)
 async def create_user(
         first_name:str = Form(...),
         last_name: str = Form(...),
@@ -35,14 +45,15 @@ async def create_user(
         image_url=img_url
     )
     try:
-        return create_user_db(new_user)
+        if create_user_db(new_user):
+            return RedirectResponse("/users", status_code=status.HTTP_302_FOUND)
     except Exception as e:
         raise e
 
 
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=list[UserID])
-def show_all_users():
+def show_all_users(request: Request):
     '''
     Show all probe in the platform
     :return: List with whole probe registered
@@ -58,7 +69,7 @@ def show_all_users():
     if not all_users:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     else:
-        return all_users
+        return templates.TemplateResponse(request, "/user/users.html",{"title":"Usuarios", "users":all_users})
 
 
 @router.get("/{user_id}", status_code=status.HTTP_200_OK, response_model=UserID)

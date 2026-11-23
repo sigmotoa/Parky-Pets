@@ -7,7 +7,7 @@ from templating import BASE_DIR
 from data.db.db_connection import create_db_tables
 from data.image_storage import IMAGES_URL,IMAGES_DIR
 
-
+from routers import user
 async def lifespan(app:FastAPI):
     create_db_tables()
     yield
