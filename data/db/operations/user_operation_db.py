@@ -48,7 +48,7 @@ def delete_user_db(user_id: int):
     user = session.get(UserID, user_id)
     session.delete(user)
     session.commit()
-    #session.refresh(user)
+    #session.refresh(users)
     return user
 
 

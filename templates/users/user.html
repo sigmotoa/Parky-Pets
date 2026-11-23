@@ -1,0 +1,22 @@
+{% macro user_card(user, n) %}
+<div class="card">
+<article class="card-image">
+<figure class="image is-128x128">
+      <img
+        src="{{ user.image_url }}"
+        alt="{{ user.name }}"
+      />
+    </figure>
+<div class="content">
+
+      <h4>{{ user.name }}</h4>
+      <br />
+
+    </div>
+
+<span class="tag is-info is-large is-light">{{ user.id_type.value }}</span>
+
+</article>
+</div>
+
+{%- endmacro %}

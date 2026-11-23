@@ -55,6 +55,6 @@ def read_one_user_csv(user_id: int):
 
 def update_user_csv():
     #readoneuser
-    #TODO implements the update user function
+    #TODO implements the update users function
     pass
 

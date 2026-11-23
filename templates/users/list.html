@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "users/user.html" import user_card %}
 
 {% block content %}
 
@@ -13,11 +14,8 @@
 </a>
 <hr>
 {% for user in users %}
+{{ user_card(user, loop.index) }}
 
-<h3 class="author-decor">{{ user.first_name }}</h3>
-<figure class="image is-128x128">
-  <img class="is-rounded" src="{{ user.image_url }}" width="128" height="128"/>
-</figure>
 <hr>
 {% endfor %}
 {% endblock %}

@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/new")
 def form_new_user(request: Request):
-    return templates.TemplateResponse(request, "/user/new_user.html", {"title":"New User"})
+    return templates.TemplateResponse(request, "/users/new_user.html", {"title":"New User"})
 
 
 
@@ -30,7 +30,7 @@ async def create_user(
         email: EmailStr = Form(...),
         image: UploadFile = File()):
     '''
-    Create a new user in the platform
+    Create a new users in the platform
     :param new_user:
     :return: OK, Created with status 201
     '''
@@ -69,28 +69,28 @@ def show_all_users(request: Request):
     if not all_users:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     else:
-        return templates.TemplateResponse(request, "/user/list.html",{"title":"Usuarios", "users":all_users})
+        return templates.TemplateResponse(request, "/users/list.html",{"title":"Usuarios", "users":all_users})
 
 
 @router.get("/{user_id}", status_code=status.HTTP_200_OK, response_model=UserID)
 def show_one_user(user_id: int):
     '''
-    Show one user in the platform
+    Show one users in the platform
     :param user_id:
-    :return: A user with the same ID registered
+    :return: A users with the same ID registered
     '''
     ##if not users_list:
       #  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     #elif len(users_list)<user_id:
      #   raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No probe found for list size")
     #else:
-     #   for user in users_list:
-      #      if user.id == user_id:
-      #          return user
+     #   for users in users_list:
+      #      if users.id == user_id:
+      #          return users
       #  return "User not found"
     #one_user=read_one_user_csv(user_id)
     #if not one_user:
-    #    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No user found")
+    #    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
     #else:
      #   return one_user
 
@@ -105,18 +105,18 @@ def show_one_user(user_id: int):
 @router.patch("/{user_id}", status_code=status.HTTP_200_OK, response_model=UserBase)
 def update_user(user_id: str, new_user: UserUpdate):
     '''
-    Update a user in the platform
+    Update a users in the platform
     :param user_id:
     :param new_user:
-    :return: the new name of the user
+    :return: the new name of the users
     '''
     ##if not users_list:
-      ##  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No user found")
+      ##  raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No users found")
     #else:
-     #   for user in users_list:
-      #      if user.id == user_id:
-       #         user.first_name = new_user.first_name
-       #         return user
+     #   for users in users_list:
+      #      if users.id == user_id:
+       #         users.first_name = new_user.first_name
+       #         return users
        # return None
     user = update_user_db(user_id, new_user)
     return user
@@ -125,10 +125,10 @@ def update_user(user_id: str, new_user: UserUpdate):
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(user_id: str):
     '''    if users_list:
-        for user in users_list:
-            if user.id == user_id:
-                users_list.remove(user)
-                return user
+        for users in users_list:
+            if users.id == user_id:
+                users_list.remove(users)
+                return users
             return "User not found"
         return "User not found"
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
