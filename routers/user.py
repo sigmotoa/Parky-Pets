@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.get("/new")
 def form_new_user(request: Request):
-    return templates.TemplateResponse(request, "/user/new.html", {"title":"New User"})
+    return templates.TemplateResponse(request, "/user/new_user.html", {"title":"New User"})
 
 
 
@@ -69,7 +69,7 @@ def show_all_users(request: Request):
     if not all_users:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     else:
-        return templates.TemplateResponse(request, "/user/users.html",{"title":"Usuarios", "users":all_users})
+        return templates.TemplateResponse(request, "/user/list.html",{"title":"Usuarios", "users":all_users})
 
 
 @router.get("/{user_id}", status_code=status.HTTP_200_OK, response_model=UserID)

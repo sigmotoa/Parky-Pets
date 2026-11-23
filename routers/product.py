@@ -45,7 +45,7 @@ def create_product(
 def show_all_products(request:Request):
     all_products =  read_all_products_db()
     return templates.TemplateResponse(
-        request, "products/products.html", {"title":"Productos","products":all_products}
+        request, "products/list.html", {"title":"Productos","products":all_products}
     )
 
 
