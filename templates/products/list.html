@@ -2,8 +2,15 @@
 
 {% block content %}
 <h1 class="title">Productos</h1>
+
 <div>
   <section>
+      <a class="button is-primary" href="/products/new">
+<span class="icon">
+<i class="fas fa-user"></i>
+</span>
+<span>Add a product</span>
+</a>
     <h2 class="title">Disponibles</h2>
 {% for product in products %}
     <h3>Producto</h3> {{ product.name }}
