@@ -2,6 +2,13 @@
 {% from "animals/animal.html" import animal_card %}
 
 {% block content %}
+<a href="/animals/new_animal" class="button is-primary">
+<span class="icon">
+<i class="fas fa-dog"></i>
+</span>
+<span>Add a dog</span>
+</a>
+
 <h1>Animals ({{ animals|length }})</h1>
 {% for animal in animals %}
 {{ animal_card(animal, loop.index) }}
