@@ -67,7 +67,8 @@ def show_all_users(request: Request):
 
     all_users = read_all_users_db()
     if not all_users:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
+        return RedirectResponse("/users/new", status_code=status.HTTP_302_FOUND)
+        #raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No probe found")
     else:
         return templates.TemplateResponse(request, "/users/list.html",{"title":"Usuarios", "users":all_users})
 
