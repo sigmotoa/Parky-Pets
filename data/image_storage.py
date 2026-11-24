@@ -3,7 +3,8 @@ from pathlib import Path
 import os
 from fastapi import UploadFile, HTTPException
 
-IMAGES_DIR = Path("images")
+IMAGES_DIR = Path("/tmp/images")
+#IMAGES_DIR = Path("images")
 IMAGES_URL = "/images"
 ALLOWED_TYPES = {
     "image/jpeg":"jpeg",
