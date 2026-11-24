@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    <img
+                            src="{{ animal.image_url }}"
+                            alt="{{ animal.name }}"
+                    />
+                </figure>
+            </div>
+            <div class="card-content">
+                <p class="title">{{ animal.name }}</p>
+                <p><strong>Especie: </strong> {{ animal.species }}</p>
+                <p><strong>Raza: </strong> {{ animal.breed.value }}</p>
+                <p><strong>Genero: </strong> {{ animal.gender.value }}</p>
+                <p><strong>Estado: </strong> {{ animal.status.value }}</p>
+                <p><strong>Fecha: </strong> {{ animal.birth_day }}</p>
+
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="card-footer">
+        <a class="card-footer-item" href="/animals/">
+        <button class="button is-warning is-dark">Regresar</button>
+        </a>
+
+
+
+    </footer>
+
+
+</section>
+
+{% endblock %}

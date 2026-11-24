@@ -1,14 +1,16 @@
 {% macro animal_card(animal, n) -%}
 
 <span># {{ n }} </span>
-
+ <a href="/animals/{{n}}">
 <div class="card">
   <div class="card-image">
     <figure class="image is-128x128">
+
       <img
         src="{{ animal.image_url }}"
         alt="{{ animal.name }}" width="160"
       />
+
     </figure>
   </div>
   <div class="card-content">
@@ -28,13 +30,11 @@
     </div>
 
     <div class="content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
-      iaculis mauris. <a>@bulmaio</a>. <a href="#">#css</a>
-      <a href="#">#responsive</a>
       <br />
+      <p class="title is-4">Raza: {{ animal.breed.value }}</p>
       <time datetime="2016-1-1">{{ animal.birth_day }}</time>
     </div>
   </div>
 </div>
-
+   </a>
 {%- endmacro %}
